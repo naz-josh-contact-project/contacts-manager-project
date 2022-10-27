@@ -20,6 +20,25 @@ public class ContactsApp {
             e.printStackTrace();
         }
     }
+
+    private static void searchForPeople(String userSearch){
+        List<String> lines = new ArrayList<>();
+
+        try {
+            lines = Files.readAllLines(contactsPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        for (String name : lines) {
+
+            if(name.contains(userSearch)){
+                System.out.println(name);
+            }
+        }
+
+    }
     private static List<String> readFile() {
         List<String> names = null;
         try {
@@ -64,6 +83,10 @@ public class ContactsApp {
                 System.out.println("Enter " + usersContact +"'s number: " );
                 String userNumber =  input.getString();
                 addPeople(usersContact, userNumber);
+            } else if (usersInput == 3){
+                System.out.println("Enter the name you would like to search for: ");
+                String userSearch = input.getString();
+                searchForPeople(userSearch);
             }
         }//End of while loop
 
