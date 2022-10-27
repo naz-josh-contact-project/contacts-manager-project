@@ -18,47 +18,17 @@ public class ContactsApp {
         }
     }
     private static void addPeople(String contactName, String contactNumber){
-        List<String> lines = new ArrayList<>();
-        Scanner myScanner = new Scanner(System.in);
+        List<String> names = new ArrayList<>();
+        names.add(contactName + " | " + contactNumber);
         try {
-            lines = Files.readAllLines(contactsPath);
-        } catch (IOException e) {
+            Files.write(contactsPath, names, StandardOpenOption.APPEND);
+        } catch(IOException e) {
             e.printStackTrace();
         }
 
-        for (String name : lines) {
-            if(name.contains(contactName)){
-                System.out.println("This contact already exists, would you like to overwrite it? [Yes/No]");
-                String userChoice = myScanner.nextLine();
-                if(userChoice.equalsIgnoreCase("yes")){
-                    deletePerson(contactName);
-                    List<String> names = new ArrayList<>();
-                    names.add(contactName + " | " + contactNumber);
-                    try {
-                        Files.write(contactsPath, names, StandardOpenOption.APPEND);
-                    } catch(IOException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    List<String> names = new ArrayList<>();
-                    names.add(contactName + " | " + contactNumber);
-                    try {
-                        Files.write(contactsPath, names, StandardOpenOption.APPEND);
-                    } catch(IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        }
         //We want to Grab the users New name
         //I want to search for the person, and if it is a match, do not
         //Allow the user to add, otherwise overwrite
-
-
-
-
-
 
     }//End of addPeople Method
     private static void searchForPeople(String userSearch){
