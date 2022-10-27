@@ -71,6 +71,7 @@ public class ContactsApp {
     }
     public static void prompt(){
         System.out.println("""
+                ----------------------------------------
                 1 - View Contacts
                 2 - Add a new contact
                 3 - Search a contact by name
@@ -110,10 +111,15 @@ public class ContactsApp {
             } else if (usersInput == 4){
                 System.out.println("Enter the name to delete: ");
                 String usersDeletedName = input.getString();
-                System.out.printf("""
-                        The following name has now been deleted:
-                        %s
-                        """, usersDeletedName);
+//                System.out.printf("""
+//                        The following name has now been deleted:
+//                        %s
+//                        """, usersDeletedName);
+                System.out.println("""
+                            The following Contact has now been deleted:
+                            ----------------------------------------""");
+                title();
+                searchForPeople(usersDeletedName);
                 deletePerson(usersDeletedName);
             }
         }//End of while loop
