@@ -25,8 +25,8 @@ public class ContactsApp {
 
 
         if(readFile().contains(contactName)){
-            System.out.println("");
-        }
+            System.out.printf("There's already a contact named %s. Do you want to overwrite it? [yes/No]", contactName);
+             }
         List<String> names = new ArrayList<>();
         names.add(contactName + " | " + contactNumber);
         try {
