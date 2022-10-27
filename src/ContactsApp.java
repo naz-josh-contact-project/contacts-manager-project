@@ -10,6 +10,14 @@ import java.util.List;
 
 public class ContactsApp {
     private static final Path contactsPath = Paths.get("src",  "contacts.txt");
+//Added New UpdateContacts method
+    private static void updateContacts(List<String> lines){
+        try{
+            Files.write(contactsPath, lines);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
     private static void addPeople(String contactName, String contactNumber){
         //We want to Grab the users New name
         List<String> names = new ArrayList<>();
@@ -35,6 +43,17 @@ public class ContactsApp {
             }
         }
     }//End of SearchForPeople Method
+
+    //Added a new DeletePerson Method
+    private static void deletePerson(String nameToDelete){
+        List<String> updatedContacts = new ArrayList<>();
+        for (String name : readFile()){
+            if (!name.contains(nameToDelete)){
+                updatedContacts.add(name);
+            }
+        }
+        updateContacts(updatedContacts);
+    }//End of DeletePerson method
 
     private static List<String> readFile() {
         List<String> names = null;
@@ -88,6 +107,14 @@ public class ContactsApp {
                 String userSearch = input.getString();
                 title();
                 searchForPeople(userSearch);
+            } else if (usersInput == 4){
+                System.out.println("Enter the name to delete: ");
+                String usersDeletedName = input.getString();
+                System.out.printf("""
+                        The following name has now been deleted:
+                        %s
+                        """, usersDeletedName);
+                deletePerson(usersDeletedName);
             }
         }//End of while loop
 
