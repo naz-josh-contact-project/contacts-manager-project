@@ -49,7 +49,7 @@ public class Input {
     }
 
     public int getInt(int min, int max){
-        String prompt = "Enter an integer between " + min + " and " + max + ":";
+        String prompt = "Enter an option (1, 2, 3, 4 or 5)";
         System.out.println(prompt);
         int userInput = getInt();
         while (userInput < min || userInput > max){
