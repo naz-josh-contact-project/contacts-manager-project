@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class ContactsApp {
     private static final Path contactsPath = Paths.get("src",  "contacts.txt");
@@ -19,22 +20,49 @@ public class ContactsApp {
         }
     }
     private static void addPeople(String contactName, String contactNumber){
+        List<String> lines = new ArrayList<>();
+        Scanner myScanner = new Scanner(System.in);
+        try {
+            lines = Files.readAllLines(contactsPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (String name : lines) {
+            if(name.contains(contactName)){
+                System.out.println("This contact already exists, would you like to overwrite it? [Yes/No]");
+                String userChoice = myScanner.nextLine();
+                if(userChoice.equalsIgnoreCase("yes")){
+                    deletePerson(contactName);
+                    List<String> names = new ArrayList<>();
+                    names.add(contactName + " | " + contactNumber);
+                    try {
+                        Files.write(contactsPath, names, StandardOpenOption.APPEND);
+                    } catch(IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    List<String> names = new ArrayList<>();
+                    names.add(contactName + " | " + contactNumber);
+                    try {
+                        Files.write(contactsPath, names, StandardOpenOption.APPEND);
+                    } catch(IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+        }
         //We want to Grab the users New name
         //I want to search for the person, and if it is a match, do not
         //Allow the user to add, otherwise overwrite
 
 
-        if(readFile().contains(contactName)){
-            System.out.printf("There's already a contact named %s. Do you want to overwrite it? [yes/No]", contactName);
-             }
-        List<String> names = new ArrayList<>();
-        names.add(contactName + " | " + contactNumber);
-        try {
-            Files.write(contactsPath, names, StandardOpenOption.APPEND);
-        } catch(IOException e) {
-            e.printStackTrace();
-        }
-    }
+
+
+
+
+    }//End of addPeople Method
 
     private static void searchForPeople(String userSearch){
         List<String> lines = new ArrayList<>();
@@ -107,7 +135,7 @@ public class ContactsApp {
 
                 System.out.println("Enter the contact name: ");
                 String usersContact = input.getString();
-                //If we added teh Search for People method here
+                //If we added the Search for People method here
                 //And if it matches
                 System.out.println("Enter " + usersContact +"'s number: " );
                 String userNumber =  input.getString();
