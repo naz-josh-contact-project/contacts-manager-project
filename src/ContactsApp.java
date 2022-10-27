@@ -1,5 +1,4 @@
 import utils.Input;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +7,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 public class ContactsApp {
     private static final Path contactsPath = Paths.get("src",  "contacts.txt");
 //Added New UpdateContacts method
@@ -63,7 +61,6 @@ public class ContactsApp {
 
 
     }//End of addPeople Method
-
     private static void searchForPeople(String userSearch){
         List<String> lines = new ArrayList<>();
         try {
@@ -78,7 +75,6 @@ public class ContactsApp {
             }
         }
     }//End of SearchForPeople Method
-
     //Added a new DeletePerson Method
     private static void deletePerson(String nameToDelete){
         List<String> updatedContacts = new ArrayList<>();
@@ -89,7 +85,6 @@ public class ContactsApp {
         }
         updateContacts(updatedContacts);
     }//End of DeletePerson method
-
     private static List<String> readFile() {
         List<String> names = null;
         try {
