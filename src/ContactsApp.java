@@ -4,10 +4,20 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 public class ContactsApp {
     private static final Path contactsPath = Paths.get("src",  "contacts.txt");
+    private static void addPeople(Input newInput, List<String> newArrayList){
+        //We want to Grab the users New name
+        //
+        try {
+            Files.write(contactsPath, newArrayList, StandardOpenOption.APPEND);
+        } catch(IOException e) {
+            e.printStackTrace();
+        }
+    }
     private static List<String> readFile() {
         List<String> names = null;
         try {
