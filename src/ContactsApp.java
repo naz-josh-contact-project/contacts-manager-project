@@ -31,12 +31,32 @@ public class ContactsApp {
         prompt();
         int usersInput = input.getInt(1, 5);
 
-        if(usersInput == 1){
-            System.out.println(readFile());
+//        for (String name: lines){
+//            System.out.println("Hello, " + name + "!");
+//        }
+//
+
+        if(usersInput == 1) {
+            System.out.println("""
+                     Name | Phone Number
+                     -------------------""");
+            for (String contact : readFile()) {
+                System.out.printf("%s%n", contact);
+
+            }
         }
 
 
 
-    }
 
-}
+
+
+
+
+
+
+
+
+    }//End of ContactApp
+
+}//End of Main
