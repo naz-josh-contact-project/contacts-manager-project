@@ -28,23 +28,25 @@ public class ContactsApp {
     public static void main(String[] args) {
         Input input = new Input();
 
-        prompt();
-        int usersInput = input.getInt(1, 5);
+        int usersInput = 0;
 
 //        for (String name: lines){
 //            System.out.println("Hello, " + name + "!");
 //        }
 //
+        while(usersInput != 5) {
+            prompt();
+            usersInput = input.getInt(1, 5);
+            if (usersInput == 1) {
+                System.out.println("""
+                        Name | Phone Number
+                        -------------------""");
+                for (String contact : readFile()) {
+                    System.out.printf("%s%n", contact);
 
-        if(usersInput == 1) {
-            System.out.println("""
-                     Name | Phone Number
-                     -------------------""");
-            for (String contact : readFile()) {
-                System.out.printf("%s%n", contact);
-
+                }
             }
-        }
+        }//End of while loop
 
 
 
