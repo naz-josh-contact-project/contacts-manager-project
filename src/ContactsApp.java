@@ -5,15 +5,17 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsApp {
     private static final Path contactsPath = Paths.get("src",  "contacts.txt");
-    private static void addPeople(Input newInput, List<String> newArrayList){
+    private static void addPeople(String contactName, String contactNumber){
         //We want to Grab the users New name
-        //
+        List<String> names = new ArrayList<>();
+        names.add(contactName + " | " + contactNumber);
         try {
-            Files.write(contactsPath, newArrayList, StandardOpenOption.APPEND);
+            Files.write(contactsPath, names, StandardOpenOption.APPEND);
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -55,6 +57,13 @@ public class ContactsApp {
                     System.out.printf("%s%n", contact);
 
                 }
+            } else if(usersInput == 2){
+
+                System.out.println("Enter the contact name: ");
+                String usersContact = input.getString();
+                System.out.println("Enter " + usersContact +"'s number: " );
+                String userNumber =  input.getString();
+                addPeople(usersContact, userNumber);
             }
         }//End of while loop
 
