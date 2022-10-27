@@ -23,22 +23,19 @@ public class ContactsApp {
 
     private static void searchForPeople(String userSearch){
         List<String> lines = new ArrayList<>();
-
         try {
             lines = Files.readAllLines(contactsPath);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
         for (String name : lines) {
-
             if(name.contains(userSearch)){
                 System.out.println(name);
             }
         }
+    }//End of SearchForPeople Method
 
-    }
     private static List<String> readFile() {
         List<String> names = null;
         try {
@@ -47,6 +44,11 @@ public class ContactsApp {
             e.printStackTrace();
         }
         return names;
+    }
+    public static void title(){
+        System.out.println("""
+                Name | Phone Number
+                -------------------""");
     }
     public static void prompt(){
         System.out.println("""
@@ -69,9 +71,7 @@ public class ContactsApp {
             prompt();
             usersInput = input.getInt(1, 5);
             if (usersInput == 1) {
-                System.out.println("""
-                        Name | Phone Number
-                        -------------------""");
+                title();
                 for (String contact : readFile()) {
                     System.out.printf("%s%n", contact);
 
@@ -86,6 +86,7 @@ public class ContactsApp {
             } else if (usersInput == 3){
                 System.out.println("Enter the name you would like to search for: ");
                 String userSearch = input.getString();
+                title();
                 searchForPeople(userSearch);
             }
         }//End of while loop
