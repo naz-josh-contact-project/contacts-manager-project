@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 public class ContactsApp {
     private static final Path contactsPath = Paths.get("src",  "contacts.txt");
-//Added New UpdateContacts method
+    //Added New UpdateContacts method
     private static void updateContacts(List<String> lines){
         try{
             Files.write(contactsPath, lines);
@@ -26,11 +26,27 @@ public class ContactsApp {
             e.printStackTrace();
         }
 
-        //We want to Grab the users New name
-        //I want to search for the person, and if it is a match, do not
-        //Allow the user to add, otherwise overwrite
-
-    }//End of addPeople Method
+    }//End of add people method
+//    private static void ifContactExists(String contactName){
+//        List<String> lines = new ArrayList<>();
+//        try {
+//            lines = Files.readAllLines(contactsPath);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        Input myInput = new Input();
+//        for(String person : lines){
+//            if(person.contains(contactName)){
+//                System.out.println("This contact already exists, would you like to continue? [Yes/No]");
+//                boolean userChoice = myInput.yesNo();
+//                if(userChoice){
+//                    return;
+//                }
+//            } else {
+//                return;
+//            }
+//        }
+//    }
     private static void searchForPeople(String userSearch){
         List<String> lines = new ArrayList<>();
         try {
@@ -40,7 +56,7 @@ public class ContactsApp {
         }
 
         for (String name : lines) {
-            if(name.contains(userSearch)){
+            if(name.toLowerCase().contains(userSearch.toLowerCase())){
                 System.out.println(name);
             }
         }
@@ -83,10 +99,6 @@ public class ContactsApp {
 
         int usersInput = 0;
 
-//        for (String name: lines){
-//            System.out.println("Hello, " + name + "!");
-//        }
-//
         while(usersInput != 5) {
             prompt();
             usersInput = input.getInt(1, 5);
@@ -100,6 +112,7 @@ public class ContactsApp {
 
                 System.out.println("Enter the contact name: ");
                 String usersContact = input.getString();
+//                ifContactExists(usersContact);
                 //If we added the Search for People method here
                 //And if it matches
                 System.out.println("Enter " + usersContact +"'s number: " );
@@ -113,10 +126,6 @@ public class ContactsApp {
             } else if (usersInput == 4){
                 System.out.println("Enter the name to delete: ");
                 String usersDeletedName = input.getString();
-//                System.out.printf("""
-//                        The following name has now been deleted:
-//                        %s
-//                        """, usersDeletedName);
                 System.out.println("""
                             The following Contact has now been deleted:
                             ----------------------------------------""");

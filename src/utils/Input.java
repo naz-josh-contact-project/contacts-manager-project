@@ -24,7 +24,6 @@ public class Input {
 
     // Solution: David Lara and John Pedrotti
     public boolean yesNo(){
-        System.out.println("Yes or no?");
         String userInput = scanner.nextLine();
         return userInput.equalsIgnoreCase("y") || userInput.equalsIgnoreCase("yes");
     }
