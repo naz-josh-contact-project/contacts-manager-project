@@ -20,6 +20,13 @@ public class ContactsApp {
     }
     private static void addPeople(String contactName, String contactNumber){
         //We want to Grab the users New name
+        //I want to search for the person, and if it is a match, do not
+        //Allow the user to add, otherwise overwrite
+
+
+        if(readFile().contains(contactName)){
+            System.out.println("");
+        }
         List<String> names = new ArrayList<>();
         names.add(contactName + " | " + contactNumber);
         try {
@@ -100,6 +107,8 @@ public class ContactsApp {
 
                 System.out.println("Enter the contact name: ");
                 String usersContact = input.getString();
+                //If we added teh Search for People method here
+                //And if it matches
                 System.out.println("Enter " + usersContact +"'s number: " );
                 String userNumber =  input.getString();
                 addPeople(usersContact, userNumber);
