@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 public class ContactsApp {
+    //================================METHODS============================================
     private static final Path contactsPath = Paths.get("src",  "contacts.txt");
     //Added New UpdateContacts method
     private static void updateContacts(List<String> lines){
@@ -17,36 +18,57 @@ public class ContactsApp {
             e.printStackTrace();
         }
     }
+    public static String formatNumber(String contactNumber){
+        String[] breakNumber = contactNumber.split("");
+        String parenthesis = "";
+        String first3Nums = "";
+        String last4Nums = "";
+        for (int i= 0; i <= 2; i++ ){
+            parenthesis += breakNumber[i];
+        }
+        for (int i= 3; i <= 5; i++ ){
+            first3Nums += breakNumber[i];
+        }
+        for (int i= 6; i <= 9; i++ ){
+            last4Nums += breakNumber[i];
+        }
+        return String.format("(%s)%s-%s",parenthesis,first3Nums,last4Nums);
+    }
     private static void addPeople(String contactName, String contactNumber){
-        List<String> names = new ArrayList<>();
-        names.add(contactName + " | " + contactNumber);
+        List<String> contactsArray = new ArrayList<>();
+        String contactsFullInfo = contactName + " | " + formatNumber(contactNumber);
+        contactsArray.add(contactsFullInfo);
         try {
-            Files.write(contactsPath, names, StandardOpenOption.APPEND);
+            Files.write(contactsPath, contactsArray, StandardOpenOption.APPEND);
         } catch(IOException e) {
             e.printStackTrace();
         }
+    }
+    private static void addPeople(){
+        List<String> contactsArray = new ArrayList<>();
+        try {
+            contactsArray = Files.readAllLines(contactsPath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scanner myScanner = new Scanner(System.in);
+        System.out.println("Enter the Contact's Name: ");
+        String userContactName = myScanner.nextLine();
+        for(String person : contactsArray) {
+            if (person.contains(userContactName)) {
+                System.out.println("This person already exists! Do you want to continue? [Yes/No]");
+                String userChoice = myScanner.nextLine();
+                if (userChoice.equalsIgnoreCase("no")) {
+                    addPeople();
+                    return;
+                }
+            }
+        }
+        System.out.println("What is " + userContactName + "'s number?");
+        String userNumber = myScanner.nextLine();
+        addPeople(userContactName, userNumber);
 
     }//End of add people method
-//    private static void ifContactExists(String contactName){
-//        List<String> lines = new ArrayList<>();
-//        try {
-//            lines = Files.readAllLines(contactsPath);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        Input myInput = new Input();
-//        for(String person : lines){
-//            if(person.contains(contactName)){
-//                System.out.println("This contact already exists, would you like to continue? [Yes/No]");
-//                boolean userChoice = myInput.yesNo();
-//                if(userChoice){
-//                    return;
-//                }
-//            } else {
-//                return;
-//            }
-//        }
-//    }
     private static void searchForPeople(String userSearch){
         List<String> lines = new ArrayList<>();
         try {
@@ -94,11 +116,10 @@ public class ContactsApp {
                 4 - Delete an existing contact
                 5 - Exit""");
     }
+    //==========================END OF METHODS==============================================
     public static void main(String[] args) {
         Input input = new Input();
-
         int usersInput = 0;
-
         while(usersInput != 5) {
             prompt();
             usersInput = input.getInt(1, 5);
@@ -106,18 +127,9 @@ public class ContactsApp {
                 title();
                 for (String contact : readFile()) {
                     System.out.printf("%s%n", contact);
-
                 }
             } else if(usersInput == 2){
-
-                System.out.println("Enter the contact name: ");
-                String usersContact = input.getString();
-//                ifContactExists(usersContact);
-                //If we added the Search for People method here
-                //And if it matches
-                System.out.println("Enter " + usersContact +"'s number: " );
-                String userNumber =  input.getString();
-                addPeople(usersContact, userNumber);
+                addPeople();
             } else if (usersInput == 3){
                 System.out.println("Enter the name you would like to search for: ");
                 String userSearch = input.getString();
@@ -135,17 +147,6 @@ public class ContactsApp {
             }
         }//End of while loop
 
+    }//End of Main
 
-
-
-
-
-
-
-
-
-
-
-    }//End of ContactApp
-
-}//End of Main
+}//End of ContactApp
