@@ -20,23 +20,38 @@ public class ContactsApp {
     }
     public static String formatNumber(String contactNumber){
         String[] breakNumber = contactNumber.split("");
-        String parenthesis = "";
-        String first3Nums = "";
-        String last4Nums = "";
-        for (int i= 0; i <= 2; i++ ){
-            parenthesis += breakNumber[i];
+        if (contactNumber.length() == 10) {
+            String parenthesis = "";
+            String first3Nums = "";
+            String last4Nums = "";
+            for (int i = 0; i <= 2; i++) {
+                parenthesis += breakNumber[i];
+            }
+            for (int i = 3; i <= 5; i++) {
+                first3Nums += breakNumber[i];
+            }
+            for (int i = 6; i <= 9; i++) {
+                last4Nums += breakNumber[i];
+            }
+            return String.format("(%s)%s-%s", parenthesis, first3Nums, last4Nums);
         }
-        for (int i= 3; i <= 5; i++ ){
-            first3Nums += breakNumber[i];
+        if (contactNumber.length() == 7) {
+            String first3Nums = "";
+            String last4Nums = "";
+            for (int i = 0; i <= 2; i++) {
+                first3Nums += breakNumber[i];
+            }
+            for (int i = 3; i <= 6; i++) {
+                last4Nums += breakNumber[i];
+            }
+            return String.format("%s-%s", first3Nums, last4Nums);
+
         }
-        for (int i= 6; i <= 9; i++ ){
-            last4Nums += breakNumber[i];
-        }
-        return String.format("(%s)%s-%s",parenthesis,first3Nums,last4Nums);
+        return"Invalid input";
     }
     private static void addPeople(String contactName, String contactNumber){
         List<String> contactsArray = new ArrayList<>();
-        String contactsFullInfo = contactName + " | " + formatNumber(contactNumber);
+        String contactsFullInfo = contactName + "           | " + formatNumber(contactNumber);
         contactsArray.add(contactsFullInfo);
         try {
             Files.write(contactsPath, contactsArray, StandardOpenOption.APPEND);
@@ -104,8 +119,8 @@ public class ContactsApp {
     }
     public static void title(){
         System.out.println("""
-                Name | Phone Number
-                -------------------""");
+                Name               | Phone Number
+                -----------------------------------""");
     }
     public static void prompt(){
         System.out.println("""
